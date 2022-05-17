@@ -1,4 +1,7 @@
 Config = Config or {}
+
+Config.CD_DrawText = false
+
 Config.Ped = {
     {
         type = "fivem-appearance",
