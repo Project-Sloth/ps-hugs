@@ -227,12 +227,12 @@ CreateThread(function()
 
         if inZone and not alreadyEnteredZone then
             alreadyEnteredZone = true
-            TriggerEvent('cd_drawtextui:ShowUI', 'show', text)
+            exports['qb-core']:DrawText("[E] Hug", "left)
         end
 
         if not inZone and alreadyEnteredZone then
             alreadyEnteredZone = false
-            TriggerEvent('cd_drawtextui:HideUI')
+            exports['qb-core']:HideText()
         end
     end
 end)
