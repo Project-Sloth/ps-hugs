@@ -1,7 +1,11 @@
 Config = Config or {}
+
+Config.Debug = false -- Set to true if you want to debug polyzones
+
 Config.Ped = {
     {
         type = "fivem-appearance",
+        text = "[E] Hug",
         coords = vector4(1770.23, 3337.75, 40.43, 309.2),
         hash = `mp_m_freemode_01`,
         tattoos = '[{"Count":1,"collection":"mpstunt_overlays","nameHash":"MP_MP_Stunt_tat_004_F"},{"Count":1,"collection":"mpheist3_overlays","nameHash":"mpHeist3_Tat_006_F"},{"Count":1,"collection":"mpheist3_overlays","nameHash":"mpHeist3_Tat_010_F"},{"Count":1,"collection":"mpheist3_overlays","nameHash":"mpHeist3_Tat_022_F"},{"Count":1,"collection":"mpvinewood_overlays","nameHash":"MP_Vinewood_Tat_019_F"},{"Count":1,"collection":"mpchristmas2017_overlays","nameHash":"MP_Christmas2017_Tattoo_006_F"},{"Count":1,"collection":"mpgunrunning_overlays","nameHash":"MP_Gunrunning_Tattoo_010_F"},{"Count":1,"collection":"mpgunrunning_overlays","nameHash":"MP_Gunrunning_Tattoo_012_F"},{"Count":1,"collection":"mpsmuggler_overlays","nameHash":"MP_Smuggler_Tattoo_003_F"},{"Count":1,"collection":"mpbusiness_overlays","nameHash":"MP_Buis_F_Back_001"},{"Count":1,"collection":"mplowrider2_overlays","nameHash":"MP_LR_Tat_000_F"},{"Count":1,"collection":"mpbiker_overlays","nameHash":"MP_MP_Biker_Tat_051_F"},{"Count":1,"collection":"mpsmuggler_overlays","nameHash":"MP_Smuggler_Tattoo_012_F"},{"Count":1,"collection":"mpheist3_overlays","nameHash":"mpHeist3_Tat_001_F"},{"Count":1,"collection":"mpheist3_overlays","nameHash":"mpHeist3_Tat_005_F"},{"Count":1,"collection":"mpheist3_overlays","nameHash":"mpHeist3_Tat_021_F"}]',
@@ -9,6 +13,7 @@ Config.Ped = {
     },
     {
         type = "qb-clothing",
+        text = "[E] Hug",
         coords = vector4(1772.36, 3335.82, 40.35, 294.28),
         hash = `mp_m_freemode_01`,
         tattoos = '[{"Count":1,"collection":"mpstunt_overlays","nameHash":"MP_MP_Stunt_tat_004_F"},{"Count":1,"collection":"mpheist3_overlays","nameHash":"mpHeist3_Tat_006_F"},{"Count":1,"collection":"mpheist3_overlays","nameHash":"mpHeist3_Tat_010_F"},{"Count":1,"collection":"mpheist3_overlays","nameHash":"mpHeist3_Tat_022_F"},{"Count":1,"collection":"mpvinewood_overlays","nameHash":"MP_Vinewood_Tat_019_F"},{"Count":1,"collection":"mpchristmas2017_overlays","nameHash":"MP_Christmas2017_Tattoo_006_F"},{"Count":1,"collection":"mpgunrunning_overlays","nameHash":"MP_Gunrunning_Tattoo_010_F"},{"Count":1,"collection":"mpgunrunning_overlays","nameHash":"MP_Gunrunning_Tattoo_012_F"},{"Count":1,"collection":"mpsmuggler_overlays","nameHash":"MP_Smuggler_Tattoo_003_F"},{"Count":1,"collection":"mpbusiness_overlays","nameHash":"MP_Buis_F_Back_001"},{"Count":1,"collection":"mplowrider2_overlays","nameHash":"MP_LR_Tat_000_F"},{"Count":1,"collection":"mpbiker_overlays","nameHash":"MP_MP_Biker_Tat_051_F"},{"Count":1,"collection":"mpsmuggler_overlays","nameHash":"MP_Smuggler_Tattoo_012_F"},{"Count":1,"collection":"mpheist3_overlays","nameHash":"mpHeist3_Tat_001_F"},{"Count":1,"collection":"mpheist3_overlays","nameHash":"mpHeist3_Tat_005_F"},{"Count":1,"collection":"mpheist3_overlays","nameHash":"mpHeist3_Tat_021_F"}]',

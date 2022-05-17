@@ -1,6 +1,7 @@
 local spawned = {}
+local PZone = {}
 
-function SpawnPeds()
+local function SpawnPeds()
     for i=1,#Config.Ped do
         local hash = Config.Ped[i].hash or `mp_m_freemode_01`
         RequestModel(hash)
@@ -111,8 +112,7 @@ function SpawnPeds()
             SetPedFaceFeature(model, 17, (data['chimp_bone_width'].item / 10))
             SetPedFaceFeature(model, 18, (data['chimp_hole'].item / 10))
             SetPedFaceFeature(model, 19, (data['neck_thikness'].item / 10))
-        end
-        if Config.Ped[i].type == "fivem-appearance" then -- FIVEM APPEARANCE
+        elseif Config.Ped[i].type == "fivem-appearance" then -- FIVEM APPEARANCE
             local data = json.decode(Config.Ped[i].data)
             for i=1,#data.components do
                 SetPedComponentVariation(model, data.components[i].component_id, data.components[i].drawable, data.components[i].texture)
@@ -158,6 +158,7 @@ function SpawnPeds()
             SetPedHairColor(model,data.hair.color,data.hair.highlight)
         end
         local tattoos = json.decode(Config.Ped[i].tattoos)
+
         for i=1,#tattoos do
             SetPedDecoration(model, tattoos[i].collection, tattoos[i].nameHash)
         end
@@ -165,15 +166,16 @@ function SpawnPeds()
 end
 
 function LoadAnim(ad)
+    if HasAnimDictLoaded(ad) then return end
+
+    RequestAnimDict(ad)
     while not HasAnimDictLoaded(ad) do
-        RequestAnimDict(ad)
         Wait(1)
     end
 end
 
 function GetClosestHug(coords)
-    local coords = coords
-    for i=1,#spawned do 
+    for i=1, #spawned do
         local ecoords = GetEntityCoords(spawned[i])
         local dist = #(coords-ecoords)
         if dist < 2 then
@@ -192,22 +194,15 @@ RegisterNetEvent('ps-hugs:client:idle', function(coords)
     TaskPlayAnim(model, "amb@world_human_aa_smoke@male@idle_a", "idle_c", 8.00, -8.00, -1, 51, 0.00, 0, 0, 0)
 end)
 
-CreateThread(function()
-    SpawnPeds()
-    local alreadyEnteredZone = false
-    local text = ' <b>[E] </b> Hug'
-    while true do
-        Wait(3)
+
+local Listening = false
+local function Listen4Control(model, spawn, ehead)
+    Listening = true
+    CreateThread(function()
         local ped = PlayerPedId()
-        local inZone = false
-        local coords = GetEntityCoords(ped)
-        local model = GetClosestHug(coords)
-        local spawn = GetEntityCoords(model)
-        local ehead = GetEntityHeading(model)
-        local dist = #(coords-vector3(spawn.x,spawn.y,spawn.z))
-        if dist <= 1.5 then
-            inZone = true
+        while Listening do
             if IsControlJustReleased(0, 38) then
+                exports['qb-core']:KeyPressed()
                 LoadAnim("mp_ped_interaction")
                 local newcoords = GetEntityForwardVector(model) * 0.4 + vector3(spawn.x,spawn.y,spawn.z-1)
                 SetEntityCoords(ped, newcoords)
@@ -220,19 +215,35 @@ CreateThread(function()
                 Wait(5000)
                 FreezeEntityPosition(ped, false)
                 TriggerServerEvent("ps-hugs:server:idle",spawn)
+
+                Listening = false
             end
-        else
-            Wait(5000)
+            Wait(0)
         end
+    end)
+end
 
-        if inZone and not alreadyEnteredZone then
-            alreadyEnteredZone = true
-            TriggerEvent('cd_drawtextui:ShowUI', 'show', text)
-        end
+CreateThread(function()
+    SpawnPeds()
 
-        if not inZone and alreadyEnteredZone then
-            alreadyEnteredZone = false
-            TriggerEvent('cd_drawtextui:HideUI')
-        end
+    for i = 1, #Config.Ped do
+        PZone[i] = CircleZone:Create(Config.Ped[i].coords, 1.0, {
+            name = "PedHug"..i,
+            debugPoly = Config.Debug,
+        })
+        
+        PZone[i]:onPlayerInOut(function(isPointInside)
+            if isPointInside then
+                local ped = PlayerPedId()
+                local coords = GetEntityCoords(ped)
+                local model = GetClosestHug(coords)
+                local spawn = GetEntityCoords(model)
+                local ehead = GetEntityHeading(model)
+                exports['qb-core']:DrawText(Config.Ped[i].text, 'left')
+                Listen4Control(model, spawn, ehead)
+            else
+                exports['qb-core']:HideText()
+            end
+        end)
     end
 end)
