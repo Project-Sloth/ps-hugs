@@ -2,7 +2,7 @@ Config = Config or {}
 
 Config.Debug = false -- Set to true if you want to debug polyzones
 
-Config.Delay = 0 -- Has no delay but you can add if you wish
+Config.Delay = 0 -- Configureable delay if set to 1 then its 1 second and 10 is 10 seconds and so on.
 
 Config.QBDrawText = true -- set to false if you want to use cd drawtext instead of qbcore
 
