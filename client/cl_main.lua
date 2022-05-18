@@ -202,7 +202,7 @@ local function Listen4Control(model, spawn, ehead)
         local ped = PlayerPedId()
         while Listening do
             if IsControlJustReleased(0, 38) then
-                exports['qb-core']:KeyPressed()
+                if Config.QBDrawText then exports['qb-core']:KeyPressed() end
                 LoadAnim("mp_ped_interaction")
                 local newcoords = GetEntityForwardVector(model) * 0.4 + vector3(spawn.x,spawn.y,spawn.z-1)
                 SetEntityCoords(ped, newcoords)
@@ -239,10 +239,10 @@ CreateThread(function()
                 local model = GetClosestHug(coords)
                 local spawn = GetEntityCoords(model)
                 local ehead = GetEntityHeading(model)
-                exports['qb-core']:DrawText(Config.Ped[i].text, 'left')
+                if Config.QBDrawText then exports['qb-core']:DrawText(Config.Ped[i].text, 'left') else TriggerEvent('cd_drawtextui:ShowUI', 'show', Config.Ped[i].text) end
                 Listen4Control(model, spawn, ehead)
             else
-                exports['qb-core']:HideText()
+                if Config.QBDrawText then exports['qb-core']:HideText() else TriggerEvent('cd_drawtextui:HideUI') end
             end
         end)
     end

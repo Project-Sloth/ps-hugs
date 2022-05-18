@@ -2,6 +2,8 @@ Config = Config or {}
 
 Config.Debug = false -- Set to true if you want to debug polyzones
 
+Config.QBDrawText = true -- set to false if you want to use cd drawtext instead of qbcore
+
 Config.Ped = {
     {
         type = "fivem-appearance",
