@@ -195,6 +195,14 @@ RegisterNetEvent('ps-hugs:client:idle', function(coords)
 end)
 
 
+local function antiSpam()
+    if Config.Delay >= 1 then 
+        hasHugged = true
+        Wait(1000 * Config.Delay)
+    end
+end
+
+local hasHugged = false
 local Listening = false
 local function Listen4Control(model, spawn, ehead)
     Listening = true
@@ -217,6 +225,7 @@ local function Listen4Control(model, spawn, ehead)
                 TriggerServerEvent("ps-hugs:server:idle",spawn)
 
                 Listening = false
+                antiSpam()
             end
             Wait(0)
         end
@@ -239,7 +248,7 @@ CreateThread(function()
                 local model = GetClosestHug(coords)
                 local spawn = GetEntityCoords(model)
                 local ehead = GetEntityHeading(model)
-                if Config.QBDrawText then exports['qb-core']:DrawText(Config.Ped[i].text, 'left') else TriggerEvent('cd_drawtextui:ShowUI', 'show', Config.Ped[i].text) end
+                if Config.QBDrawText and not hasHugged then exports['qb-core']:DrawText(Config.Ped[i].text, 'left') elseif not hasHugged then TriggerEvent('cd_drawtextui:ShowUI', 'show', Config.Ped[i].text) end
                 Listen4Control(model, spawn, ehead)
             else
                 if Config.QBDrawText then exports['qb-core']:HideText() else TriggerEvent('cd_drawtextui:HideUI') end
