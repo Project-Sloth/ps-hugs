@@ -227,12 +227,24 @@ CreateThread(function()
 
         if inZone and not alreadyEnteredZone then
             alreadyEnteredZone = true
-            TriggerEvent('cd_drawtextui:ShowUI', 'show', text)
+            if Config.Interaction == "qb" then
+                exports['qb-core']:DrawText(text, "left")
+            elseif Config.Interaction == "cd" then
+                TriggerEvent('cd_drawtextui:ShowUI', 'show', text)
+            else
+                exports['qb-drawtext']:DrawText(text, "left")
+            end
         end
 
         if not inZone and alreadyEnteredZone then
             alreadyEnteredZone = false
-            TriggerEvent('cd_drawtextui:HideUI')
+            if Config.Interaction == "qb" then
+                exports['qb-core']:HideText()
+            elseif Config.Interaction == "cd" then
+                TriggerEvent('cd_drawtextui:HideUI')
+            else
+                exports['qb-drawtext']:HideText()
+            end
         end
     end
 end)

@@ -1,4 +1,7 @@
 Config = Config or {}
+
+Config.Interaction = "qb" -- qb = qb-core drawtext  /  cd = cd drawtext  /  draw = qb-drawtext
+
 Config.Ped = {
     {
         type = "fivem-appearance",
